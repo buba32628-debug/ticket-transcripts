@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcript - 💻・suporte-0046</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+            background: url("https://media.discordapp.net/attachments/1235823028223348809/1277126488289837129/gif_revoada.gif?ex=69d2917a&is=69d13ffa&hm=2df6ea23e3cce2580051e658ea81479eeccf562b8911a6b1234b4248f850d2f5&=") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.00);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: rgba(20, 20, 20, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: neonBorder 6s linear infinite;
+        }
+        @keyframes neonBorder {
+            0%   { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+            25%  { box-shadow: 0 0 15px #5865F2, 0 0 30px #5865F2; }
+            50%  { box-shadow: 0 0 15px #ff00c8, 0 0 30px #ff00c8; }
+            75%  { box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; }
+            100% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+        }
+        .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 25px 0; }
+        .message { display: flex; gap: 15px; margin-bottom: 22px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+        .message-content { flex: 1; }
+        .message-header { display: flex; align-items: center; gap: 8px; }
+        .username { font-weight: 600; font-size: 15px; color: white; }
+        .time { font-size: 12px; color: #aab0b6; }
+        .text { color: #e3e5e8; font-size: 15px; margin-top: 4px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .mention { display: inline; background: rgba(88,101,242,0.3); color: #c9cdfb; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention:hover { background: rgba(88,101,242,0.6); color: #fff; }
+        .mention-role { display: inline; background: rgba(255,183,77,0.2); color: #ffb74d; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention-role:hover { background: rgba(255,183,77,0.4); }
+        .mention-channel { display: inline; background: rgba(88,101,242,0.2); color: #8ea1e1; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention-channel:hover { background: rgba(88,101,242,0.4); color: #c9cdfb; }
+        .emoji-unicode { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; font-size: 1.2em; vertical-align: middle; line-height: 1; }
+        .emoji-custom { width: 22px; height: 22px; vertical-align: middle; object-fit: contain; }
+        .emoji-custom.big { width: 48px; height: 48px; }
+        .attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .attachment-image { max-width: 400px; max-height: 300px; border-radius: 8px; cursor: pointer; object-fit: cover; box-shadow: 0 2px 12px rgba(0,0,0,0.5); transition: opacity 0.2s; }
+        .attachment-image:hover { opacity: 0.85; }
+        .attachment-video { max-width: 400px; border-radius: 8px; display: block; }
+        .attachment-file { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 14px; color: #00c3ff; text-decoration: none; font-size: 14px; }
+        .attachment-file:hover { background: rgba(255,255,255,0.12); }
+        .attachment-file-icon { font-size: 20px; }
+        .sticker { width: 96px; height: 96px; margin-top: 6px; object-fit: contain; border-radius: 4px; }
+        .embed { margin-top: 8px; border-left: 4px solid #5865F2; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; max-width: 500px; }
+        .embed-title { font-weight: bold; color: white; margin-bottom: 4px; }
+        .embed-description { color: #dbdee1; font-size: 14px; }
+        .embed-field { margin-top: 6px; }
+        .embed-field-name { font-weight: bold; font-size: 13px; color: white; }
+        .embed-field-value { font-size: 13px; color: #dbdee1; }
+        .embed-footer { font-size: 12px; color: #aab0b6; margin-top: 6px; }
+        .embed-image { max-width: 100%; border-radius: 6px; margin-top: 8px; cursor: pointer; transition: opacity 0.2s; }
+        .embed-image:hover { opacity: 0.85; }
+        .reply { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #aab0b6; margin-bottom: 4px; }
+        .reply::before { content: "↱"; font-size: 16px; color: #5865F2; }
+        .reply-username { color: white; font-weight: 600; }
+        a { color: #00c3ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.90); z-index: 9999; align-items: center; justify-content: center; cursor: zoom-out; flex-direction: column; gap: 12px; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.8); }
+        .lightbox-hint { color: #aab0b6; font-size: 13px; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="">
+        <span class="lightbox-hint">Clique para fechar</span>
+    </div>
+    <div class="container">
+        <h2 style="color:white; margin-top:0; margin-bottom:30px;">📄 💻・suporte-0046</h2>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1452003977062383796/a_cf0c1091c031623d4b09e93ddef64dcf.gif?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Influencer</span>
+                    <span class="time">08/04/2026 23:09</span>
+                </div>
+                <div class="text">&lt;@1296980458479030363&gt;</div>
+                
+                
+                <div class="embed" style="border-left-color:#6d2cff;"><div class="embed-title">**Ticket de Suporte**</div><div class="embed-description">Precisa de ajuda com o servidor? Nossa equipe está pronta<br>para resolver problemas técnicos, esclarecer dúvidas sobre<br>regras, auxiliar com comandos e funcionalidades. Atendimento<br>rápido e eficiente!</div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:09</span>
+                </div>
+                <div class="text">Oi</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:09</span>
+                </div>
+                <div class="text">Pode me banir do Discord da revoada</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:09</span>
+                </div>
+                <div class="text">Dele normal</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:09</span>
+                </div>
+                <div class="text">Bandido tem um ano já</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:10</span>
+                </div>
+                <div class="text">&lt;@533421513689530387&gt;</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1296980458479030363/5030117ebb5322e2934a06087f283c6a.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Pedro braga | 9373</span>
+                    <span class="time">08/04/2026 23:10</span>
+                </div>
+                <div class="text">Por favor</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/533421513689530387/a_0ac5394a1d0dc97ca7833cec3f41dcaa.gif?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">ツ Pinguim</span>
+                    <span class="time">09/04/2026 02:58</span>
+                </div>
+                <div class="text">desbanido</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+    </div>
+    <script>
+        window.MENTION_USERS    = {"1296980458479030363": "Pedro braga | 9373", "533421513689530387": "ツ Pinguim"};
+        window.MENTION_ROLES    = {};
+        window.MENTION_CHANNELS = {};
+        
+        function openLightbox(event, src) {
+            event.preventDefault();
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        document.getElementById('lightbox').addEventListener('click', function() {
+            this.classList.remove('active');
+            document.getElementById('lightbox-img').src = '';
+        });
+
+        function resolveAll(rootEl) {
+            const USERS    = window.MENTION_USERS    || {};
+            const ROLES    = window.MENTION_ROLES    || {};
+            const CHANNELS = window.MENTION_CHANNELS || {};
+
+            const selector = [
+                '.text', '.embed-title', '.embed-description',
+                '.embed-field-name', '.embed-field-value',
+                '.embed-footer', '.reply'
+            ].join(', ');
+
+            rootEl.querySelectorAll(selector).forEach(el => {
+                el.innerHTML = el.innerHTML
+                    .replace(/&lt;a:([^:]+):(\d+)&gt;/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.gif?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/&lt;:([^:]+):(\d+)&gt;/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.webp?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/<a:([^:>]+):(\d+)>/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.gif?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/<:([^:>]+):(\d+)>/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.webp?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/&lt;@&amp;(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention-role">@${ROLES[id] || id}</span>`)
+                    .replace(/<@&(\d+)>/g, (_, id) =>
+                        `<span class="mention-role">@${ROLES[id] || id}</span>`)
+                    .replace(/&lt;#(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention-channel">#${CHANNELS[id] || id}</span>`)
+                    .replace(/<#(\d+)>/g, (_, id) =>
+                        `<span class="mention-channel">#${CHANNELS[id] || id}</span>`)
+                    .replace(/&lt;@!?(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention">@${USERS[id] || id}</span>`)
+                    .replace(/<@!?(\d+)>/g, (_, id) =>
+                        `<span class="mention">@${USERS[id] || id}</span>`);
+            });
+        }
+
+        resolveAll(document);
+    
+    </script>
+</body>
+</html>
