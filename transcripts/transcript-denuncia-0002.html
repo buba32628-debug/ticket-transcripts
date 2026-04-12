@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket #denuncia-0002</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+            background-color: #1a1a2e;
+        }
+        body {
+            background-image: url("https://media.discordapp.net/attachments/1480962095377023128/1480962723289370846/bfef3bef85a047b653255bb586b5f7b2.png?ex=69dc6e44&is=69db1cc4&hm=a49129138a6a328ecd855bf4ff67eb33e20034f5818091e9bc049f4b5352c14d&=&format=webp&quality=lossless&width=1768&height=720");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: rgba(20, 20, 20, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: neonBorder 6s linear infinite;
+        }
+        @keyframes neonBorder {
+            0%   { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+            25%  { box-shadow: 0 0 15px #5865F2, 0 0 30px #5865F2; }
+            50%  { box-shadow: 0 0 15px #ff00c8, 0 0 30px #ff00c8; }
+            75%  { box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; }
+            100% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+        }
+        .codeblock {
+            background: #2b2d31;
+            border: 1px solid #1e1f22;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 4px 0;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 13px;
+            color: #dcddde;
+            white-space: pre-wrap;
+            word-break: break-word;
+            display: block;
+        }
+        .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 20px 0; }
+        .message { display: flex; gap: 16px; margin-bottom: 4px; padding: 4px 8px; border-radius: 4px; }
+        .message:hover { background: rgba(255,255,255,0.03); }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; object-fit: cover; margin-top: 2px; }
+        .message-content { flex: 1; min-width: 0; }
+        .message-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
+        .username { font-weight: 600; font-size: 15px; color: #ffffff; }
+        .tag { font-size: 12px; color: #72767d; }
+        .time { font-size: 12px; color: #72767d; }
+        .text { color: #dcddde; font-size: 15px; white-space: pre-wrap; word-break: break-word; line-height: 1.375; }
+        .mention { display: inline; background: rgba(88,101,242,0.3); color: #c9cdfb; font-weight: 500; border-radius: 3px; padding: 0 2px; cursor: default; }
+        .mention:hover { background: rgba(88,101,242,0.6); color: #fff; }
+        .mention-role { display: inline; background: rgba(255,183,77,0.2); color: #ffb74d; font-weight: 500; border-radius: 3px; padding: 0 2px; cursor: default; }
+        .mention-channel { display: inline; background: rgba(88,101,242,0.2); color: #8ea1e1; font-weight: 500; border-radius: 3px; padding: 0 2px; cursor: default; }
+        .emoji-custom { width: 22px; height: 22px; vertical-align: middle; object-fit: contain; }
+        .attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .attachment-image { max-width: 400px; max-height: 300px; border-radius: 4px; cursor: pointer; object-fit: cover; }
+        .attachment-image:hover { opacity: 0.85; }
+        .attachment-video { max-width: 400px; border-radius: 4px; display: block; }
+        .attachment-file { display: inline-flex; align-items: center; gap: 8px; background: #2f3136; border: 1px solid #202225; border-radius: 4px; padding: 10px 16px; color: #00aff4; text-decoration: none; font-size: 14px; margin-top: 8px; }
+        .attachment-file:hover { text-decoration: underline; }
+        .attachment-file-icon { font-size: 20px; }
+        .sticker { width: 96px; height: 96px; margin-top: 6px; object-fit: contain; border-radius: 4px; }
+        .reply { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #72767d; margin-bottom: 4px; padding-left: 56px; position: relative; }
+        .reply::before { content: ""; position: absolute; left: 28px; top: 50%; width: 22px; height: 10px; border-left: 2px solid #4f545c; border-top: 2px solid #4f545c; border-radius: 4px 0 0 0; }
+        .reply-username { color: #c9cdfb; font-weight: 600; }
+        .reply-text { color: #72767d; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .discord-embed { display: flex; margin-top: 8px; max-width: 520px; border-left: 4px solid #5865F2; border-radius: 4px; background: #2f3136; overflow: hidden; }
+        .discord-embed-inner { padding: 12px 16px 12px 12px; flex: 1; min-width: 0; }
+        .embed-author { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #ffffff; }
+        .embed-author-icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .embed-title { font-weight: 700; font-size: 15px; color: #ffffff; margin-bottom: 6px; }
+        .embed-title a { color: #00aff4; text-decoration: none; }
+        .embed-title a:hover { text-decoration: underline; }
+        .embed-description { font-size: 14px; color: #dcddde; line-height: 1.4; margin-bottom: 8px; white-space: pre-wrap; word-break: break-word; }
+        .embed-fields { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .embed-field { min-width: 100%; }
+        .embed-field.inline { min-width: 0; flex: 1; }
+        .embed-field-name { font-weight: 700; font-size: 13px; color: #ffffff; margin-bottom: 2px; }
+        .embed-field-value { font-size: 13px; color: #dcddde; white-space: pre-wrap; word-break: break-word; }
+        .embed-image { max-width: 100%; border-radius: 4px; margin-top: 8px; display: block; }
+        .embed-thumbnail { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; float: right; margin-left: 16px; }
+        .embed-footer { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #72767d; margin-top: 8px; }
+        .embed-footer-icon { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+        a { color: #00aff4; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; cursor: zoom-out; overflow: auto; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 95vw; max-height: 95vh; width: auto; height: auto; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.8); object-fit: contain; cursor: zoom-in; }
+    </style>
+</head>
+<body>
+    <div id="lightbox" onclick="this.classList.remove('active')">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="container">
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1476329117292040222/956ee1f754b5d888beb8bc691cdc2781.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Stop Car</span>
+                    <span class="tag">Stop Car#8674</span>
+                    <span class="time">12/04/2026 15:50</span>
+                </div>
+                <div class="text">&lt;@1334705455817031681&gt;</div>
+                
+                
+                <div class="discord-embed" style="border-left-color:#6d2cff;"><div class="discord-embed-inner"><div class="embed-title">**Denúncia**</div><div class="embed-description">**🛑 DENÚNCIA**<br>• *Denuncie uma situação de má conduta ou quebra de regras.*<br><br>**TODA DENÚNCIA DEVE CONTER AS PROVAS UPADAS NO YOUTUBE COM ÁUDIO DE AMBAS AS PARTES, ENGLOBANDO O CONTEXTO DA MÁ CONDUTA.**<br><br>**IMPORTANTE:** Certifique-se de fornecer informações precisas e fundamentadas.<br></div><div class="codeblock"><br>Siga o modelo abaixo:<br>Meu ID:<br>ID dos Envolvidos:<br>Descrição do Ocorrido:<br>Data e Hora do Ocorrido:<br>Provas:<br></div><div class="embed-description"></div></div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1334705455817031681/1628fc11e7961d85181295493426b775.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[TUN.P] Buba #0</span>
+                    <span class="tag">buba2.00918</span>
+                    <span class="time">12/04/2026 15:50</span>
+                </div>
+                <div class="text">teste</div>
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1476329117292040222/956ee1f754b5d888beb8bc691cdc2781.png?size=1024" alt="">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Stop Car</span>
+                    <span class="tag">Stop Car#8674</span>
+                    <span class="time">12/04/2026 15:50</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                <div class="discord-embed" style="border-left-color:#e74c3c;"><div class="discord-embed-inner"><div class="embed-title">🔒 Ticket sendo encerrado</div><div class="embed-description">Este ticket será fechado em **1** segundos...</div></div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+    </div>
+    <script>
+        window.MENTION_USERS    = {"1334705455817031681": "[TUN.P] Buba #0"};
+        window.MENTION_ROLES    = {};
+        window.MENTION_CHANNELS = {};
+        
+        document.querySelectorAll('.attachment-image').forEach(img => {
+            img.addEventListener('click', () => {
+                document.getElementById('lightbox-img').src = img.src;
+                document.getElementById('lightbox').classList.add('active');
+            });
+        });
+
+        function resolveAll(rootEl) {
+            const USERS    = window.MENTION_USERS    || {};
+            const ROLES    = window.MENTION_ROLES    || {};
+            const CHANNELS = window.MENTION_CHANNELS || {};
+
+            const selector = [
+                '.text', '.embed-title', '.embed-description',
+                '.embed-field-name', '.embed-field-value',
+                '.embed-footer', '.reply'
+            ].join(', ');
+
+            rootEl.querySelectorAll(selector).forEach(el => {
+                el.innerHTML = el.innerHTML
+                    .replace(/&lt;a:([^:]+):(\d+)&gt;/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.gif?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/&lt;:([^:]+):(\d+)&gt;/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.webp?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/<a:([^:>]+):(\d+)>/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.gif?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/<:([^:>]+):(\d+)>/g, (_, name, id) =>
+                        `<img class="emoji-custom" src="https://cdn.discordapp.com/emojis/${id}.webp?size=48&quality=lossless" alt=":${name}:" title=":${name}:">`)
+                    .replace(/&lt;@&amp;(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention-role">@${ROLES[id] || id}</span>`)
+                    .replace(/<@&(\d+)>/g, (_, id) =>
+                        `<span class="mention-role">@${ROLES[id] || id}</span>`)
+                    .replace(/&lt;#(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention-channel">#${CHANNELS[id] || id}</span>`)
+                    .replace(/<#(\d+)>/g, (_, id) =>
+                        `<span class="mention-channel">#${CHANNELS[id] || id}</span>`)
+                    .replace(/&lt;@!?(\d+)&gt;/g, (_, id) =>
+                        `<span class="mention">@${USERS[id] || id}</span>`)
+                    .replace(/<@!?(\d+)>/g, (_, id) =>
+                        `<span class="mention">@${USERS[id] || id}</span>`);
+            });
+        }
+
+        resolveAll(document);
+    
+    </script>
+</body>
+</html>
