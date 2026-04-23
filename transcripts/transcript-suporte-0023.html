@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket 0023</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+            background: url("https://media.discordapp.net/attachments/1482140018855383173/1484282907588690041/banner-criadores-genesis.png?ex=69d807ad&is=69d6b62d&hm=27f73dca7fff2be90de647c62de7dc97f8182679b65b4b5f42e85a101d5a0f54&=&format=webp&quality=lossless&width=1774&height=723") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.00);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: rgba(20, 20, 20, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: neonBorder 6s linear infinite;
+        }
+        @keyframes neonBorder {
+            0%   { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+            25%  { box-shadow: 0 0 15px #5865F2, 0 0 30px #5865F2; }
+            50%  { box-shadow: 0 0 15px #ff00c8, 0 0 30px #ff00c8; }
+            75%  { box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; }
+            100% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+        }
+        .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 25px 0; }
+        .message { display: flex; gap: 15px; margin-bottom: 22px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+        .message-content { flex: 1; min-width: 0; }
+        .message-header { display: flex; align-items: center; gap: 8px; }
+        .username { font-weight: 600; font-size: 15px; color: white; }
+        .time { font-size: 12px; color: #aab0b6; }
+        .text { color: #e3e5e8; font-size: 15px; margin-top: 4px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .mention { display: inline; background: rgba(88,101,242,0.3); color: #c9cdfb; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention:hover { background: rgba(88,101,242,0.6); color: #fff; }
+        .mention-role { display: inline; background: rgba(255,183,77,0.2); color: #ffb74d; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-role:hover { background: rgba(255,183,77,0.4); }
+        .mention-channel { display: inline; background: rgba(88,101,242,0.2); color: #8ea1e1; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-channel:hover { background: rgba(88,101,242,0.4); color: #c9cdfb; }
+        .emoji-custom { width: 22px; height: 22px; vertical-align: middle; object-fit: contain; }
+        .attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .attachment-image, .attachment-gif { max-width: 400px; max-height: 300px; border-radius: 8px; cursor: zoom-in; object-fit: cover; box-shadow: 0 2px 12px rgba(0,0,0,0.5); transition: opacity 0.2s; display: block; }
+        .attachment-image:hover, .attachment-gif:hover { opacity: 0.85; }
+        .attachment-video { max-width: 400px; border-radius: 8px; display: block; }
+        .attachment-file { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 14px; color: #00c3ff; text-decoration: none; font-size: 14px; }
+        .attachment-file:hover { background: rgba(255,255,255,0.12); }
+        .sticker { width: 96px; height: 96px; margin-top: 6px; object-fit: contain; border-radius: 4px; }
+        .embed { margin-top: 8px; display: flex; flex-direction: column; background: #2b2d31; border-radius: 4px; border-left: 4px solid #5865F2; max-width: 520px; overflow: hidden; }
+        .embed-body { display: flex; gap: 12px; padding: 12px 16px 0 12px; }
+        .embed-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+        .embed-provider { font-size: 12px; color: #dbdee1; }
+        .embed-author { display: flex; align-items: center; gap: 6px; }
+        .embed-author-icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .embed-author-name { font-size: 14px; font-weight: 600; color: #fff; }
+        .embed-author-name a { color: #fff; }
+        .embed-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .embed-title a { color: #00a8fc; }
+        .embed-description { font-size: 14px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .embed-fields { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+        .embed-field { min-width: 0; width: 100%; }
+        .embed-field.inline { flex: 1 1 140px; max-width: 200px; width: auto; }
+        .embed-field-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .embed-field-value { font-size: 13px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.4; }
+        .embed-thumbnail { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; cursor: zoom-in; align-self: flex-start; }
+        .embed-image-wrap { margin: 10px 12px 0 12px; }
+        .embed-image { width: 100%; max-height: 300px; object-fit: contain; border-radius: 4px; display: block; cursor: zoom-in; }
+        .embed-footer { display: flex; align-items: center; gap: 6px; padding: 8px 12px 10px 12px; }
+        .embed-footer-icon { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+        .embed-footer-text { font-size: 12px; color: #aab0b6; }
+        .embed-footer-sep { color: #aab0b6; font-size: 12px; margin: 0 3px; }
+        .reply { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #aab0b6; margin-bottom: 4px; }
+        .reply::before { content: "↱"; font-size: 16px; color: #5865F2; }
+        .reply-username { color: white; font-weight: 600; }
+        a { color: #00c3ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.9); object-fit: contain; }
+        #lightbox-close { position: fixed; top: 16px; right: 22px; font-size: 30px; color: rgba(255,255,255,0.7); cursor: pointer; user-select: none; z-index: 10000; }
+        #lightbox-close:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div id="lightbox">
+        <span id="lightbox-close">✕</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="container">
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">15/04/2026 20:00</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(109,44,255);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">💻 Ticket de Suporte</span><br>Olá &lt;@1314385686199271468&gt; &lt;a:735484647202488360:1488763204342386728&gt;<br><br>Precisa de ajuda com o servidor? Nossa equipe está pronta para resolver problemas técnicos, esclarecer dúvidas sobre regras, auxiliar com comandos e funcionalidades. Atendimento rápido e eficiente!</div><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;">🔧 <strong>Ações disponíveis:</strong></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">15/04/2026 20:00</span>
+                </div>
+                <div class="text">queria solicitar a entrada do meu anao</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">15/04/2026 20:00</span>
+                </div>
+                <div class="text">vou mandar o preset aqui</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">15/04/2026 20:00</span>
+                </div>
+                <div class="text"></div>
+                
+                <div class="attachments"><a class="attachment-file" href="https://cdn.discordapp.com/attachments/1494064856167350364/1494065008269590689/JuninLadoLeste.rar?ex=69ea7a78&is=69e928f8&hm=1dd44082f24d400ddd958340352d2f49da6ad80371ac7bf8345eaa68d22573f8&" target="_blank"><span class="attachment-file-icon">📎</span>JuninLadoLeste.rar</a></div>
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">15/04/2026 22:21</span>
+                </div>
+                <div class="text">Vou solicitar!</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 02:58</span>
+                </div>
+                <div class="text">Calma aí tenho um preset novo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 02:58</span>
+                </div>
+                <div class="text">Vou mandar um preset que não tem marca nenhuma</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 02:58</span>
+                </div>
+                <div class="text">Aí é melhor pra cidade também</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">16/04/2026 03:00</span>
+                </div>
+                <div class="text">Ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 03:28</span>
+                </div>
+                <div class="text">Calma vou mandar agora</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 03:53</span>
+                </div>
+                <div class="text">https://cdn.discordapp.com/attachments/1493739377669443617/1494183592450981941/AdultoCarioca.rar?ex=69e1ae69&amp;is=69e05ce9&amp;hm=068cde254d1332b8a107e5bebfc5cb8250015b2fa2812cfe3622e5953ad0c17a&amp;</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 03:53</span>
+                </div>
+                <div class="text">Aí o Ped novo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 03:54</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 04:51</span>
+                </div>
+                <div class="text">Esse aí não tem nenhuma marca não <span class="mention">@521404156628434955</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">16/04/2026 10:03</span>
+                </div>
+                <div class="text">Ta bom… assim que chegar em casa ja verifico</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 17:02</span>
+                </div>
+                <div class="text">Ta bom vou mandar a foto do anão aqui pra vc. Também</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 17:02</span>
+                </div>
+                <div class="text"></div>
+                
+                <div class="attachments"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1494382504260403281/image.png?ex=69ea50a9&is=69e8ff29&hm=7001e07b488fcc86a4db7123ef5b9d1ae5c1a8810e38c9f6c8132852dce3fec0&" alt="image.png" onclick="openLightbox(this.src)"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1494382504529100851/image.png?ex=69ea50a9&is=69e8ff29&hm=d00a208df30af9d7633712c2d44af3a29b8addfaa5dcab80d84b20874a62d961&" alt="image.png" onclick="openLightbox(this.src)"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1494382504789020672/image.png?ex=69ea50a9&is=69e8ff29&hm=6dc4aadbca6904afaea0d4c104155783189593ba07ad21ec7bf4ba98ae9c74ac&" alt="image.png" onclick="openLightbox(this.src)"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1494382505455780070/image.png?ex=69ea50a9&is=69e8ff29&hm=64fb4155a716f6e66ce7eede2536f49afa327f01ad694d256336d339cfab6773&" alt="image.png" onclick="openLightbox(this.src)"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1494382505749385307/image.png?ex=69ea50a9&is=69e8ff29&hm=6beb50053834d335db1fb9449590db05d13b4320d6a7b5d48ed9d7621f964c03&" alt="image.png" onclick="openLightbox(this.src)"></div>
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 17:02</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">16/04/2026 18:26</span>
+                </div>
+                <div class="text">Assim q chegar em casa prossigo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">Cacazita</span>
+                Assim q chegar em casa prossigo
+            </div>
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 18:31</span>
+                </div>
+                <div class="text">Ta bom</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 23:29</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span> teve alguma resposta</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">16/04/2026 23:31</span>
+                </div>
+                <div class="text">Sua skin ja foi solicitada.</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">16/04/2026 23:44</span>
+                </div>
+                <div class="text">Brigado aí <span class="mention">@521404156628434955</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">16/04/2026 23:44</span>
+                </div>
+                <div class="text">Nada</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">17/04/2026 17:01</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span>  boa tarde sabe me dizer se o Ped já foi setado</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Carioca Dubala | 2202</span>
+                &lt;@521404156628434955&gt;  boa tarde sabe me dizer se o Ped já foi setado
+            </div>
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">17/04/2026 18:12</span>
+                </div>
+                <div class="text">Ainda não foi, peço que aguarde. A demanda está alta</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">Cacazita</span>
+                Ainda não foi, peço que aguarde. A demanda está alta
+            </div>
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">17/04/2026 18:42</span>
+                </div>
+                <div class="text">Ta bom obrigado</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">18/04/2026 16:46</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span> boa tarde</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">18/04/2026 16:46</span>
+                </div>
+                <div class="text">Sobe me dizer se já foi setado o Ped</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 16:49</span>
+                </div>
+                <div class="text"><span class="mention">@521404156628434955</span> boa tarde</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[COORD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[COORD] Luna 🐞</span>
+                    <span class="time">20/04/2026 21:19</span>
+                </div>
+                <div class="text">Boa noite! Vou testar agora</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[COORD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[COORD] Luna 🐞</span>
+                    <span class="time">20/04/2026 21:24</span>
+                </div>
+                <div class="text">Você sabe qual o spawn?</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:55</span>
+                </div>
+                <div class="text">como assim</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:56</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:57</span>
+                </div>
+                <div class="text">tipo assim ta muito dificil criar um conteudo agora aqui na cidade nao tenho nada nem vip nem carro  nem dinheiro so ando de pe ta muito dificil  realmente da uma moral ai por favor</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:57</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:57</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:58</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[COORD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Carioca Dubala | 2202</span>
+                como assim
+            </div>
+                <div class="message-header">
+                    <span class="username">[COORD] Luna 🐞</span>
+                    <span class="time">20/04/2026 21:58</span>
+                </div>
+                <div class="text">O nome do arquivo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 21:59</span>
+                </div>
+                <div class="text">carioca</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:00</span>
+                </div>
+                <div class="text">cariocaadulto</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:00</span>
+                </div>
+                <div class="text">https://cdn.discordapp.com/attachments/1493739377669443617/1494183592450981941/AdultoCarioca.rar?ex=69e79d29&amp;is=69e64ba9&amp;hm=378a90afbedef2a21d8b42382adcf3a08f519a18f861ccc9a04bfee2ce3bc311&amp;</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:00</span>
+                </div>
+                <div class="text">o arquivo ai</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:02</span>
+                </div>
+                <div class="text">se tiver como setar ele agora pra mim e o vip agradeco muito</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:02</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:03</span>
+                </div>
+                <div class="text">pq tipo minha live nao e de ficar com 0 pessoas mais ta agora pq nao tem nada pra fazer pow</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:10</span>
+                </div>
+                <div class="text"><span class="mention">@[COORD] Luna 🐞</span> da essa moral ai pra mim nao ficar sem fazer nada</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">20/04/2026 22:22</span>
+                </div>
+                <div class="text">Eu já solicitei sua skin... Infelizmente eu dependo do dev colocar!</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:26</span>
+                </div>
+                <div class="text">tudo bem</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:49</span>
+                </div>
+                <div class="text"></div>
+                
+                <div class="attachments"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1495919385976508458/image.png?ex=69eaa1fe&is=69e9507e&hm=df61bfb2887d79ffd6efaae4100748a3e4b6ecdf6dce6bc9b0df9bb73e184a9b&" alt="image.png" onclick="openLightbox(this.src)"></div>
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1314385686199271468/332364a40bdc5ce5d6921f5ca3454cad.png?size=64" alt="[INF] Carioca Dubala | 2202" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Carioca Dubala | 2202</span>
+                    <span class="time">20/04/2026 22:50</span>
+                </div>
+                <div class="text"></div>
+                
+                <div class="attachments"><img class="attachment-image" src="https://cdn.discordapp.com/attachments/1494064856167350364/1495919595893162015/image.png?ex=69eaa230&is=69e950b0&hm=3d7e02461af69b9fd9d8750dfea9948f9a29d79652ec8ccc5cf79db768aee1f1&" alt="image.png" onclick="openLightbox(this.src)"></div>
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/521404156628434955/81c07a52a14b8ac52f226a4fb04ef05b.png?size=64" alt="Cacazita" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Carioca Dubala | 2202</span>
+                
+            </div>
+                <div class="message-header">
+                    <span class="username">Cacazita</span>
+                    <span class="time">20/04/2026 22:52</span>
+                </div>
+                <div class="text">Você registra aqui https://discord.com/channels/1479177282705821860/1493363074583887902<br><br>E envia na hora que iniciar a live juntamente com o link pra gente acompanhar! 😊</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">23/04/2026 03:19</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(255,0,0);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">🔒 Ticket Encerrado</span><br>Fechado por &lt;@951165907420479568&gt;<br><br>Gerando transcript...</div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox || e.target === lightboxImg)
+                lightbox.classList.remove('active');
+        });
+        document.getElementById('lightbox-close')
+            .addEventListener('click', () => lightbox.classList.remove('active'));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
