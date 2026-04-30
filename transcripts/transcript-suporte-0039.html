@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket 0039</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+            background: url("https://media.discordapp.net/attachments/1482140018855383173/1484282907588690041/banner-criadores-genesis.png?ex=69d807ad&is=69d6b62d&hm=27f73dca7fff2be90de647c62de7dc97f8182679b65b4b5f42e85a101d5a0f54&=&format=webp&quality=lossless&width=1774&height=723") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.00);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: rgba(20, 20, 20, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: neonBorder 6s linear infinite;
+        }
+        @keyframes neonBorder {
+            0%   { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+            25%  { box-shadow: 0 0 15px #5865F2, 0 0 30px #5865F2; }
+            50%  { box-shadow: 0 0 15px #ff00c8, 0 0 30px #ff00c8; }
+            75%  { box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; }
+            100% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+        }
+        .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 25px 0; }
+        .message { display: flex; gap: 15px; margin-bottom: 22px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+        .message-content { flex: 1; min-width: 0; }
+        .message-header { display: flex; align-items: center; gap: 8px; }
+        .username { font-weight: 600; font-size: 15px; color: white; }
+        .time { font-size: 12px; color: #aab0b6; }
+        .text { color: #e3e5e8; font-size: 15px; margin-top: 4px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .mention { display: inline; background: rgba(88,101,242,0.3); color: #c9cdfb; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention:hover { background: rgba(88,101,242,0.6); color: #fff; }
+        .mention-role { display: inline; background: rgba(255,183,77,0.2); color: #ffb74d; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-role:hover { background: rgba(255,183,77,0.4); }
+        .mention-channel { display: inline; background: rgba(88,101,242,0.2); color: #8ea1e1; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-channel:hover { background: rgba(88,101,242,0.4); color: #c9cdfb; }
+        .emoji-custom { width: 22px; height: 22px; vertical-align: middle; object-fit: contain; }
+        .attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .attachment-image, .attachment-gif { max-width: 400px; max-height: 300px; border-radius: 8px; cursor: zoom-in; object-fit: cover; box-shadow: 0 2px 12px rgba(0,0,0,0.5); transition: opacity 0.2s; display: block; }
+        .attachment-image:hover, .attachment-gif:hover { opacity: 0.85; }
+        .attachment-video { max-width: 400px; border-radius: 8px; display: block; }
+        .attachment-file { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 14px; color: #00c3ff; text-decoration: none; font-size: 14px; }
+        .attachment-file:hover { background: rgba(255,255,255,0.12); }
+        .sticker { width: 96px; height: 96px; margin-top: 6px; object-fit: contain; border-radius: 4px; }
+        .embed { margin-top: 8px; display: flex; flex-direction: column; background: #2b2d31; border-radius: 4px; border-left: 4px solid #5865F2; max-width: 520px; overflow: hidden; }
+        .embed-body { display: flex; gap: 12px; padding: 12px 16px 0 12px; }
+        .embed-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+        .embed-provider { font-size: 12px; color: #dbdee1; }
+        .embed-author { display: flex; align-items: center; gap: 6px; }
+        .embed-author-icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .embed-author-name { font-size: 14px; font-weight: 600; color: #fff; }
+        .embed-author-name a { color: #fff; }
+        .embed-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .embed-title a { color: #00a8fc; }
+        .embed-description { font-size: 14px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .embed-fields { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+        .embed-field { min-width: 0; width: 100%; }
+        .embed-field.inline { flex: 1 1 140px; max-width: 200px; width: auto; }
+        .embed-field-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .embed-field-value { font-size: 13px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.4; }
+        .embed-thumbnail { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; cursor: zoom-in; align-self: flex-start; }
+        .embed-image-wrap { margin: 10px 12px 0 12px; }
+        .embed-image { width: 100%; max-height: 300px; object-fit: contain; border-radius: 4px; display: block; cursor: zoom-in; }
+        .embed-footer { display: flex; align-items: center; gap: 6px; padding: 8px 12px 10px 12px; }
+        .embed-footer-icon { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+        .embed-footer-text { font-size: 12px; color: #aab0b6; }
+        .embed-footer-sep { color: #aab0b6; font-size: 12px; margin: 0 3px; }
+        .reply { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #aab0b6; margin-bottom: 4px; }
+        .reply::before { content: "↱"; font-size: 16px; color: #5865F2; }
+        .reply-username { color: white; font-weight: 600; }
+        a { color: #00c3ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.9); object-fit: contain; }
+        #lightbox-close { position: fixed; top: 16px; right: 22px; font-size: 30px; color: rgba(255,255,255,0.7); cursor: pointer; user-select: none; z-index: 10000; }
+        #lightbox-close:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div id="lightbox">
+        <span id="lightbox-close">✕</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="container">
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">28/04/2026 01:34</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(109,44,255);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">💻 Ticket de Suporte</span><br>Olá &lt;@908887472245735484&gt; &lt;a:735484647202488360:1488763204342386728&gt;<br><br>Precisa de ajuda com o servidor? Nossa equipe está pronta para resolver problemas técnicos, esclarecer dúvidas sobre regras, auxiliar com comandos e funcionalidades. Atendimento rápido e eficiente!</div><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;">🔧 <strong>Ações disponíveis:</strong></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 01:34</span>
+                </div>
+                <div class="text">boa noite</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 02:17</span>
+                </div>
+                <div class="text"><span class="mention">@[META] Cunhã</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 02:30</span>
+                </div>
+                <div class="text"><span class="mention">@[INF] Bada Volpi | 6781</span> você está atualmente na metacity? O que vc tem na cidade?</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 02:35</span>
+                </div>
+                <div class="text">no monento nada</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 02:35</span>
+                </div>
+                <div class="text">so tenho 5horas e alguns minutos</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 02:36</span>
+                </div>
+                <div class="text">mais nao tenho nada</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 03:09</span>
+                </div>
+                <div class="text">Certo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 03:10</span>
+                </div>
+                <div class="text">Você é líder de organização ou algo assim ?<span class="mention">@[INF] Bada Volpi | 6781</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 03:10</span>
+                </div>
+                <div class="text">Não</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 16:47</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> EAE vai conseguir me transferir para a genesis</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 17:01</span>
+                </div>
+                <div class="text"><span class="mention">@[META] Cunhã</span>  EAE oque vamos resolver</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 17:13</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> pode transferir ele</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 17:15</span>
+                </div>
+                <div class="text">Okay</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 17:15</span>
+                </div>
+                <div class="text"><span class="mention">@[INF] Bada Volpi | 6781</span> Me diz teu nome e id na genesis por favor</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:21</span>
+                </div>
+                <div class="text">Meu nome e bada Volpi e o id e 6781</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 18:27</span>
+                </div>
+                <div class="text">vou fazer sua pasta</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 18:27</span>
+                </div>
+                <div class="text">só um momento</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 18:29</span>
+                </div>
+                <div class="text">prontinho! quando estiver online na cidade me avisa</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 18:29</span>
+                </div>
+                <div class="text"><span class="mention">@[INF] Bada Volpi | 6781</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:32</span>
+                </div>
+                <div class="text">Ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:34</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span>  quando eu tiver  fazendo a meta de live certinho eu irei receber dinheiro fora do game também assim que meu contrato for aceito Serginho</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Bada Volpi | 6781</span>
+                &lt;@951165907420479568&gt;  quando eu tiver  fazendo a meta de live certinho eu...
+            </div>
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">28/04/2026 18:35</span>
+                </div>
+                <div class="text">Ai quem pode te orientar é a <span class="mention">@[META] Cunhã</span>, não sei como foi fechado teu contrato lá</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:36</span>
+                </div>
+                <div class="text">Entendi</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:37</span>
+                </div>
+                <div class="text"><span class="mention">@[META] Cunhã</span> quando eu cumprir a meta de live tudo certinho eu irei receber algum dinheiro fora do game</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 18:37</span>
+                </div>
+                <div class="text">Tipo dinheiro real</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 20:19</span>
+                </div>
+                <div class="text"><span class="mention">@[META] Cunhã</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 20:22</span>
+                </div>
+                <div class="text"><span class="mention">@[INF] Bada Volpi | 6781</span> Não Bada, você não tem contrato na metacity</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 20:23</span>
+                </div>
+                <div class="text">Não tem contrato para migrar para a Genesis</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 20:23</span>
+                </div>
+                <div class="text">Apenas beneficios de criadores</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 20:48</span>
+                </div>
+                <div class="text">Entendi</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 20:49</span>
+                </div>
+                <div class="text">E como faria pra conseguir um contra na genesis</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 20:50</span>
+                </div>
+                <div class="text">Contrato na cidade genesis</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1071086116909883503/4e2324af3aff3664f35474017c7304bc.png?size=64" alt="[META] Cunhã" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[META] Cunhã</span>
+                    <span class="time">28/04/2026 21:28</span>
+                </div>
+                <div class="text">No momento não estamos fechando contrato para streamers da Gênesis</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 21:33</span>
+                </div>
+                <div class="text">Entendi</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 21:33</span>
+                </div>
+                <div class="text">Quando abri me informe pfv</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">28/04/2026 23:15</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> estou entrando na cidade</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 12:29</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> hoje a noite teria como setar os meus benefícios na cidade</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 12:29</span>
+                </div>
+                <div class="text">Fiquei esperando ontem e nada</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 12:49</span>
+                </div>
+                <div class="text">Perdão</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 12:49</span>
+                </div>
+                <div class="text">Acabei dormindo, mas assim que estiver on-line avisa que seto o vip</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 12:49</span>
+                </div>
+                <div class="text">O carro irei solicitar</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 14:34</span>
+                </div>
+                <div class="text">Ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 14:34</span>
+                </div>
+                <div class="text">E o vaucher eu ganho  ainda aí posso solicitar algum outro carro na loja</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 17:09</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> a cidade não vai volta</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Bada Volpi | 6781</span>
+                &lt;@951165907420479568&gt; a cidade não vai volta
+            </div>
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 17:09</span>
+                </div>
+                <div class="text">Vai sim! Está em manutenção</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 17:10</span>
+                </div>
+                <div class="text">Ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 21:34</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> Jajá estarei logando na cidade</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:34</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> estou logando na cidade</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[INF] Bada Volpi | 6781</span>
+                &lt;@951165907420479568&gt; estou logando na cidade
+            </div>
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 22:43</span>
+                </div>
+                <div class="text">Está on-line?</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:52</span>
+                </div>
+                <div class="text">to  to loando</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:52</span>
+                </div>
+                <div class="text">aora tava toando banho rapidinho</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:55</span>
+                </div>
+                <div class="text">to na tela de carreamento</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:56</span>
+                </div>
+                <div class="text">carregaento</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:57</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> to online</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 22:59</span>
+                </div>
+                <div class="text">estou online</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 23:01</span>
+                </div>
+                <div class="text">Ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 23:01</span>
+                </div>
+                <div class="text">Entrando</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 23:03</span>
+                </div>
+                <div class="text">ok</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 23:08</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span> estou no seu aguardo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 23:20</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span>  vai conseguir setar meus beneficios ainda hj</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 23:21</span>
+                </div>
+                <div class="text">estou no seu aguardo</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 23:28</span>
+                </div>
+                <div class="text">Já foi setado</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/908887472245735484/f9531f226f7de01736a2fb61ef7714eb.png?size=64" alt="[INF] Bada Volpi | 6781" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[INF] Bada Volpi | 6781</span>
+                    <span class="time">29/04/2026 23:28</span>
+                </div>
+                <div class="text">OBRIGADO</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">30/04/2026 11:10</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(255,0,0);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">🔒 Ticket Encerrado</span><br>Fechado por &lt;@951165907420479568&gt;<br><br>Gerando transcript...</div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox || e.target === lightboxImg)
+                lightbox.classList.remove('active');
+        });
+        document.getElementById('lightbox-close')
+            .addEventListener('click', () => lightbox.classList.remove('active'));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
