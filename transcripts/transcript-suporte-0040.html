@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket 0040</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "gg sans", "Segoe UI", Arial, sans-serif;
+            background: url("https://media.discordapp.net/attachments/1482140018855383173/1484282907588690041/banner-criadores-genesis.png?ex=69d807ad&is=69d6b62d&hm=27f73dca7fff2be90de647c62de7dc97f8182679b65b4b5f42e85a101d5a0f54&=&format=webp&quality=lossless&width=1774&height=723") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.00);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: rgba(20, 20, 20, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: neonBorder 6s linear infinite;
+        }
+        @keyframes neonBorder {
+            0%   { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+            25%  { box-shadow: 0 0 15px #5865F2, 0 0 30px #5865F2; }
+            50%  { box-shadow: 0 0 15px #ff00c8, 0 0 30px #ff00c8; }
+            75%  { box-shadow: 0 0 15px #00ff88, 0 0 30px #00ff88; }
+            100% { box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff; }
+        }
+        .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 25px 0; }
+        .message { display: flex; gap: 15px; margin-bottom: 22px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+        .message-content { flex: 1; min-width: 0; }
+        .message-header { display: flex; align-items: center; gap: 8px; }
+        .username { font-weight: 600; font-size: 15px; color: white; }
+        .time { font-size: 12px; color: #aab0b6; }
+        .text { color: #e3e5e8; font-size: 15px; margin-top: 4px; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .mention { display: inline; background: rgba(88,101,242,0.3); color: #c9cdfb; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; transition: background 0.15s; }
+        .mention:hover { background: rgba(88,101,242,0.6); color: #fff; }
+        .mention-role { display: inline; background: rgba(255,183,77,0.2); color: #ffb74d; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-role:hover { background: rgba(255,183,77,0.4); }
+        .mention-channel { display: inline; background: rgba(88,101,242,0.2); color: #8ea1e1; font-weight: 500; border-radius: 4px; padding: 0 4px; cursor: default; }
+        .mention-channel:hover { background: rgba(88,101,242,0.4); color: #c9cdfb; }
+        .emoji-custom { width: 22px; height: 22px; vertical-align: middle; object-fit: contain; }
+        .attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .attachment-image, .attachment-gif { max-width: 400px; max-height: 300px; border-radius: 8px; cursor: zoom-in; object-fit: cover; box-shadow: 0 2px 12px rgba(0,0,0,0.5); transition: opacity 0.2s; display: block; }
+        .attachment-image:hover, .attachment-gif:hover { opacity: 0.85; }
+        .attachment-video { max-width: 400px; border-radius: 8px; display: block; }
+        .attachment-file { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 14px; color: #00c3ff; text-decoration: none; font-size: 14px; }
+        .attachment-file:hover { background: rgba(255,255,255,0.12); }
+        .sticker { width: 96px; height: 96px; margin-top: 6px; object-fit: contain; border-radius: 4px; }
+        .embed { margin-top: 8px; display: flex; flex-direction: column; background: #2b2d31; border-radius: 4px; border-left: 4px solid #5865F2; max-width: 520px; overflow: hidden; }
+        .embed-body { display: flex; gap: 12px; padding: 12px 16px 0 12px; }
+        .embed-left { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+        .embed-provider { font-size: 12px; color: #dbdee1; }
+        .embed-author { display: flex; align-items: center; gap: 6px; }
+        .embed-author-icon { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .embed-author-name { font-size: 14px; font-weight: 600; color: #fff; }
+        .embed-author-name a { color: #fff; }
+        .embed-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .embed-title a { color: #00a8fc; }
+        .embed-description { font-size: 14px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+        .embed-fields { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+        .embed-field { min-width: 0; width: 100%; }
+        .embed-field.inline { flex: 1 1 140px; max-width: 200px; width: auto; }
+        .embed-field-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .embed-field-value { font-size: 13px; color: #dbdee1; white-space: pre-wrap; word-break: break-word; line-height: 1.4; }
+        .embed-thumbnail { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; cursor: zoom-in; align-self: flex-start; }
+        .embed-image-wrap { margin: 10px 12px 0 12px; }
+        .embed-image { width: 100%; max-height: 300px; object-fit: contain; border-radius: 4px; display: block; cursor: zoom-in; }
+        .embed-footer { display: flex; align-items: center; gap: 6px; padding: 8px 12px 10px 12px; }
+        .embed-footer-icon { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+        .embed-footer-text { font-size: 12px; color: #aab0b6; }
+        .embed-footer-sep { color: #aab0b6; font-size: 12px; margin: 0 3px; }
+        .reply { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #aab0b6; margin-bottom: 4px; }
+        .reply::before { content: "↱"; font-size: 16px; color: #5865F2; }
+        .reply-username { color: white; font-weight: 600; }
+        a { color: #00c3ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 9999; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.9); object-fit: contain; }
+        #lightbox-close { position: fixed; top: 16px; right: 22px; font-size: 30px; color: rgba(255,255,255,0.7); cursor: pointer; user-select: none; z-index: 10000; }
+        #lightbox-close:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div id="lightbox">
+        <span id="lightbox-close">✕</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="container">
+        
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">28/04/2026 03:34</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(109,44,255);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">💻 Ticket de Suporte</span><br>Olá &lt;@314257075582533632&gt; &lt;a:735484647202488360:1488763204342386728&gt;<br><br>Precisa de ajuda com o servidor? Nossa equipe está pronta para resolver problemas técnicos, esclarecer dúvidas sobre regras, auxiliar com comandos e funcionalidades. Atendimento rápido e eficiente!</div><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;">🔧 <strong>Ações disponíveis:</strong></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div><div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; "></div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">28/04/2026 03:34</span>
+                </div>
+                <div class="text">Boa noite, desejo ser streamer na cidade</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">28/04/2026 03:35</span>
+                </div>
+                <div class="text">https://kick.com/birit4<br><br>Segue meu canal</div>
+                
+                
+                <div class="embed" style="border-left-color:#5865F2;"><div class="embed-body"><div class="embed-left"><div class="embed-provider">Kick</div><div class="embed-title"><a href="https://kick.com/birit4" target="_blank">Birit4 Stream - Watch Live on Kick</a></div><div class="embed-description">Neon RP - https://discord.gg/cidadeneon</div></div><img class="embed-thumbnail" src="https://files.kick.com/images/user/84125210/profile_image/conversion/7b073b34-f0d2-4402-9eb8-853fe1cd0114-fullsize.webp" alt="thumbnail" onclick="openLightbox(this.src)"></div></div>
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">29/04/2026 03:48</span>
+                </div>
+                <div class="text"><span class="mention">@[LEAD] Luna 🐞</span></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 12:50</span>
+                </div>
+                <div class="text">Bom dia! Preenche a aba https://discord.com/channels/1479177282705821860/1479200836428238878 que assim que possível estaremos avaliando <img class="emoji-custom" src="https://cdn.discordapp.com/emojis/1488763204342386728.gif?size=48&quality=lossless" alt=":735484647202488360:" title=":735484647202488360:"></div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[LEAD] Luna 🐞</span>
+                Bom dia! Preenche a aba https://discord.com/channels/1479177282705821860/1479200...
+            </div>
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">29/04/2026 12:56</span>
+                </div>
+                <div class="text">Preenchido, obg</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">29/04/2026 13:45</span>
+                </div>
+                <div class="text">Assim que possível estaremos avaliando</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+            <div class="reply">
+                <span class="reply-username">[LEAD] Luna 🐞</span>
+                Assim que possível estaremos avaliando
+            </div>
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">30/04/2026 06:17</span>
+                </div>
+                <div class="text">Deu certo?</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">30/04/2026 11:10</span>
+                </div>
+                <div class="text">Bom dia! Irei analisar hoje, estava doente</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">30/04/2026 11:10</span>
+                </div>
+                <div class="text">Perdão pela demora</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/314257075582533632/a_c58433b183e98c61618123de550e7518.gif?size=64" alt="Birita Silva | 6807" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">Birita Silva | 6807</span>
+                    <span class="time">30/04/2026 13:55</span>
+                </div>
+                <div class="text">Bom dia, tranquilo, obrigado</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/guilds/1479177282705821860/users/951165907420479568/avatars/9dfbc635a3a79fa6369ab35841bc5627.png?size=64" alt="[LEAD] Luna 🐞" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">[LEAD] Luna 🐞</span>
+                    <span class="time">05/05/2026 00:00</span>
+                </div>
+                <div class="text">📜 Termos do cargo SERVIDOR ・Streamer<br>TERMOS DO PROGRAMA DE STREAMERS – METAGROUP<br>Ao ingressar no Programa de Streamers, o participante declara que leu e concorda com os termos abaixo.<br><br>SOBRE O PROGRAMA<br><br>O Programa de Streamers tem como objetivo incentivar a criação de conteúdo e a divulgação do servidor por meio de transmissões ao vivo e conteúdos digitais. A participação ocorre mediante inscrição e análise da equipe responsável, que poderá aprovar ou recusar candidaturas conforme critérios internos.<br><br>NATUREZA DA PARTICIPAÇÃO<br><br>A participação no programa possui caráter voluntário, promocional e não remunerado, não configurando vínculo empregatício, prestação de serviços ou relação de trabalho. O Streamer participa de forma independente e autônoma, podendo definir livremente horários, frequência de lives e formato do conteúdo produzido.<br><br>BENEFÍCIOS<br><br>Streamers aprovados poderão receber benefícios dentro do servidor, como:<br>• Cargo VIP Streamer<br>• Tag de Influencer Oficial no Discord<br>• Acesso a canal exclusivo de divulgação<br>Os benefícios possuem natureza promocional, podendo ser alterados ou removidos pela administração, sem geração de direito adquirido.<br><br>METAS PROMOCIONAIS<br><br>O programa poderá estabelecer metas promocionais indicativas para incentivar a divulgação do servidor.<br>O cumprimento dessas metas não constitui obrigação contratual, sendo utilizado apenas como critério para concessão de benefícios promocionais.<br>Exemplo de meta indicativa: até 80 horas mensais de transmissão do servidor em plataformas públicas (Twitch, Kick, YouTube ou similares).<br><br>Para registro das transmissões poderá ser solicitado:<br>• print do início da live com data, hora e link<br>• print do encerramento com data, hora e estatísticas<br><br>RECOMPENSAS PROMOCIONAIS<br><br>Streamers que atingirem metas promocionais poderão receber benefícios como:<br>• Voucher para utilização na Loja VIP<br>O voucher possui caráter exclusivamente promocional, não sendo considerado pagamento, salário ou remuneração.<br><br>CONDUTA DO INFLUENCER<br><br>Durante sua participação, o Streamer concorda em:<br>• respeitar as regras do servidor<br>• manter comportamento adequado<br>• não prejudicar a imagem do servidor<br>• não divulgar servidores concorrentes durante transmissões relacionadas ao servidor<br><br>USO DE IMAGEM E CONTEÚDO<br><br>O Streamer autoriza a utilização de trechos de transmissões ou conteúdos produzidos dentro do servidor para divulgação do projeto em redes sociais ou materiais promocionais, sem geração de pagamento adicional.<br><br>DESCUMPRIMENTO DAS REGRAS<br><br>O descumprimento das regras poderá resultar em:<br>• advertência<br>• remoção de benefícios<br>• exclusão do programa<br>• suspensão ou banimento do servidor<br>A decisão será avaliada pela administração.<br><br>ALTERAÇÃO OU ENCERRAMENTO DO PROGRAMA<br><br>A administração poderá alterar regras, metas ou benefícios, bem como suspender ou encerrar o programa a qualquer momento, mediante comunicação nos canais oficiais.<br><br>AUSÊNCIA DE EXCLUSIVIDADE<br><br>A participação no programa não exige exclusividade. O Streamer pode participar de outros projetos ou servidores. Durante transmissões relacionadas ao servidor, compromete-se a não divulgar projetos concorrentes.<br><br>ACEITE DOS TERMOS<br><br>Ao ingressar no programa, o participante declara que leu e concorda com estes termos.</div>
+                
+                
+                
+                
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="message">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1481850733178523739/c738f6bcfcaf217e54d6ffddfeb8ea14.png?size=64" alt="GENESIS INFLUENCER" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+            <div class="message-content">
+                
+                <div class="message-header">
+                    <span class="username">GENESIS INFLUENCER</span>
+                    <span class="time">06/05/2026 00:16</span>
+                </div>
+                <div class="text"></div>
+                
+                
+                
+                <div class="component-container" style="background:#2b2d31; border-radius:8px; padding:12px 16px; margin-top:8px; max-width:520px; border-left: 4px solid rgb(255,0,0);"><div class="component-text" style="color:#dbdee1;font-size:14px;line-height:1.6;margin:4px 0;"><span style="font-size:18px;font-weight:700;color:#fff;">🔒 Ticket Encerrado</span><br>Fechado por &lt;@951165907420479568&gt;<br><br>Gerando transcript...</div></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox || e.target === lightboxImg)
+                lightbox.classList.remove('active');
+        });
+        document.getElementById('lightbox-close')
+            .addEventListener('click', () => lightbox.classList.remove('active'));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
